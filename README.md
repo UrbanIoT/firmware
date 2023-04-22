@@ -79,3 +79,18 @@ you have built the application, run the following command to flash it:
 ```shell
 west flash
 ```
+
+Compile:
+west build -p always -b rpi_pico --force app -- -DOPENOCD=/opt/homebrew/bin/openocd -DOPENOCD_DEFAULT_PATH=/opt/homebrew/Cellar/open-ocd/0.12.0/share/openocd/scripts -DRPI_PICO_DEBUG_ADAPTER=cmsis-dap
+
+Flash:
+openocd -f interface/cmsis-dap.cfg -f target/rp2040.cfg -c "adapter speed 5000" -c "program build/zephyr/zephyr.elf verify reset exit"
+
+Start openocd server:
+openocd -f interface/cmsis-dap.cfg -f target/rp2040.cfg -c "adapter speed 5000"
+
+debug:
+arm-none-eabi-gdb build/zephyr/zephyr.elf
+> target remote localhost:3333
+> monitor reset init
+> continue

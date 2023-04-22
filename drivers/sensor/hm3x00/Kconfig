@@ -1,0 +1,27 @@
+menuconfig HM3X00
+	bool "Laser PM2.5 Sensor (HM3300/HM3600)"
+	default y
+	depends on DT_HAS_SEEED_HM3X00_ENABLED
+	select I2C
+	help
+	  Enable driver Laser PM2.5 Sensor (HM3300/HM3600) sensor.
+
+
+choice "HM3X00_VALUE_CHOICE"
+	prompt "Sensor return values"
+	default HM3X00_CF1_STANDARD_PARTICULATE
+	depends on HM3X00
+
+config HM3X00_CF1_STANDARD_PARTICULATE
+	bool "CF=1, Standard particulate"
+
+config HM3X00_ATMOSPHERIC_ENVIRONMENT
+	bool "Atmospheric environment"
+
+endchoice
+
+config HM3X00_RETURN_VALUES
+	int
+	depends on HM3X00
+	default 0 if HM3X00_CF1_STANDARD_PARTICULATE
+	default 1 if HM3X00_ATMOSPHERIC_ENVIRONMENT

@@ -1,0 +1,15 @@
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  HM-3300/3600 is a new generation of laser dust detection sensor developed by our
+  company, used for continuous and real-time detection of dust in the air.
+  Different from the pumping dust detection sensor, the HM-3300/3600 innovatively uses fan
+  blades to drive air, and the air flowing through the detection chamber is used as a test sample to
+  perform real-time and continuous test on dust of different particle sizes in the air.
+  HM-3300/3600 is suitable for dust detectors, intelligent air purifiers, intelligent air
+  conditioners, intelligent ventilation fans, air quality testing, haze meters, environmental monitoring
+  and relative products and applications.
+
+compatible: "seeed,hm3x00"
+
+include: i2c-device.yaml

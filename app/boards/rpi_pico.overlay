@@ -1,10 +1,22 @@
+// SPDX-License-Identifier: Apache-2.0
+
+// #include <zephyr/dt-bindings/gpio/gpio.h>
+// #include <zephyr/dt-bindings/i2c/i2c.h>
+// #include <zephyr/dt-bindings/led/led.h>
+// #include <zephyr/dt-bindings/usb/usb.h>
+// #include <zephyr/dt-bindings/pinctrl/rpi-pico-rp2040-pinctrl.h>
+//zephyr/dts/bindings/serial/raspberrypi,pico-uart.yaml
+
 / {
-	// aliases {
-    //     lora-uart = &uart1;
+	model = "UrbanIoT rpi pico";
+	compatible = "raspberrypi,pico";
+	
+	// chosen {
+	// 	zephyr,console = &usb_cdc;
 	// };
-	examplesensor0: examplesensor_0 {
-		compatible = "zephyr,examplesensor";
-		input-gpios = <&gpio0 13 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+
+	aliases {
+        lora-uart = &uart1;
 	};
 };
 
@@ -47,6 +59,12 @@
     };
 };
 
+// &zephyr_udc0 {
+// 	usb_cdc: usb_cdc_0 {
+// 		compatible = "zephyr,cdc-acm-uart";
+// 	};
+// };
+
 &uart1 {
     compatible = "raspberrypi,pico-uart";
 	current-speed = <9600>;
@@ -61,16 +79,8 @@
 	pinctrl-0 = <&i2c0_default>;
 	pinctrl-names = "default";
 
-	bme680@76 {
-		compatible = "bosch,bme680";
-		reg = <0x76>;
+	hm3x00@40 {
+		compatible = "seeed,hm3x00";
+		reg = <0x40>;
 	};
-	// hm3301@40 {
-	// 	compatible = "hm3301";
-	// 	reg = <0x40>;
-	// };
-};
-
-&gpio0 {
-	status = "okay";
 };

@@ -1,6 +1,6 @@
-# Copyright (c) 2021 Nordic Semiconductor ASA
 # SPDX-License-Identifier: Apache-2.0
 
 if SENSOR
 rsource "examplesensor/Kconfig"
+rsource "hm3x00/Kconfig"
 endif # SENSOR

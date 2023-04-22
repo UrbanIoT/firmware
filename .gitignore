@@ -10,3 +10,7 @@
 /build*
 
 __pycache__/
+
+twister-out*/
+
+.DS_Store

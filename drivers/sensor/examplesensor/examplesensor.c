@@ -12,16 +12,18 @@
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(examplesensor, CONFIG_SENSOR_LOG_LEVEL);
 
-struct examplesensor_data {
+struct examplesensor_data
+{
 	int state;
 };
 
-struct examplesensor_config {
+struct examplesensor_config
+{
 	struct gpio_dt_spec input;
 };
 
 static int examplesensor_sample_fetch(const struct device *dev,
-				      enum sensor_channel chan)
+									  enum sensor_channel chan)
 {
 	const struct examplesensor_config *config = dev->config;
 	struct examplesensor_data *data = dev->data;
@@ -32,12 +34,13 @@ static int examplesensor_sample_fetch(const struct device *dev,
 }
 
 static int examplesensor_channel_get(const struct device *dev,
-				     enum sensor_channel chan,
-				     struct sensor_value *val)
+									 enum sensor_channel chan,
+									 struct sensor_value *val)
 {
 	struct examplesensor_data *data = dev->data;
 
-	if (chan != SENSOR_CHAN_PROX) {
+	if (chan != SENSOR_CHAN_PROX)
+	{
 		return -ENOTSUP;
 	}
 
@@ -57,13 +60,15 @@ static int examplesensor_init(const struct device *dev)
 
 	int ret;
 
-	if (!device_is_ready(config->input.port)) {
+	if (!device_is_ready(config->input.port))
+	{
 		LOG_ERR("Input GPIO not ready");
 		return -ENODEV;
 	}
 
 	ret = gpio_pin_configure_dt(&config->input, GPIO_INPUT);
-	if (ret < 0) {
+	if (ret < 0)
+	{
 		LOG_ERR("Could not configure input GPIO (%d)", ret);
 		return ret;
 	}
@@ -71,16 +76,16 @@ static int examplesensor_init(const struct device *dev)
 	return 0;
 }
 
-#define EXAMPLESENSOR_INIT(i)						       \
-	static struct examplesensor_data examplesensor_data_##i;	       \
-									       \
-	static const struct examplesensor_config examplesensor_config_##i = {  \
-		.input = GPIO_DT_SPEC_INST_GET(i, input_gpios),		       \
-	};								       \
-									       \
-	DEVICE_DT_INST_DEFINE(i, examplesensor_init, NULL,		       \
-			      &examplesensor_data_##i,			       \
-			      &examplesensor_config_##i, POST_KERNEL,	       \
-			      CONFIG_SENSOR_INIT_PRIORITY, &examplesensor_api);
+#define EXAMPLESENSOR_INIT(i)                                             \
+	static struct examplesensor_data examplesensor_data_##i;              \
+                                                                          \
+	static const struct examplesensor_config examplesensor_config_##i = { \
+		.input = GPIO_DT_SPEC_INST_GET(i, input_gpios),                   \
+	};                                                                    \
+                                                                          \
+	DEVICE_DT_INST_DEFINE(i, examplesensor_init, NULL,                    \
+						  &examplesensor_data_##i,                        \
+						  &examplesensor_config_##i, POST_KERNEL,         \
+						  CONFIG_SENSOR_INIT_PRIORITY, &examplesensor_api);
 
 DT_INST_FOREACH_STATUS_OKAY(EXAMPLESENSOR_INIT)
