@@ -16,3 +16,7 @@ manifest:
         name-allowlist:
           - cmsis
           - hal_rpi_pico
+    # - name: minmea
+    #   url: https://github.com/capsoid/minmea
+    #   revision: master
+    #   path: minmea

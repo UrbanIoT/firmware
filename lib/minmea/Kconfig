@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: Apache-2.0
+
+config MINMEA
+	bool "minmea Support"
+	help
+	  Minmea is a minimalistic GPS parser library written in pure C intended for resource-constrained platforms, especially microcontrollers and other embedded systems.
